@@ -2,7 +2,7 @@
 
 Laboratório local para testes de segurança em aplicações que usam modelos de linguagem (LLMs).
 
-**Status:** Etapa 1 — ambiente, GitHub e preset OpenAI.
+**Status:** Etapa 5 — testes automatizados com pytest.
 
 Use apenas em aplicações próprias, modelos locais e ambientes autorizados.
 
@@ -51,12 +51,30 @@ git config --global user.name "Seu Nome"
 git config --global user.email "seu@email.com"
 ```
 
-## Execução rápida (Etapa 1)
+## Testes automatizados (Etapa 5)
 
 ```powershell
 cd "C:\Users\user\Documents\Projetos Cursor\Aegis AI Lab"
 .\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+python -m pytest
+```
+
+Atalho no PowerShell:
+
+```powershell
+.\scripts\run_tests.ps1
+```
+
+Só testes de integração (campanha completa):
+
+```powershell
+python -m pytest -m integration
+```
+
+## Execução rápida
+
+```powershell
 python app.py
-python tests\test_env.py
-python tests\test_config.py
+python scripts\demo_etapa4.py
 ```

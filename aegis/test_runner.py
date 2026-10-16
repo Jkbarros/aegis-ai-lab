@@ -45,6 +45,8 @@ class CampaignSummary:
 class TestRunner:
     """Executa casos da biblioteca JSON contra um perfil da aplicação simulada."""
 
+    __test__ = False  # classe de produção; não é suite pytest
+
     def __init__(
         self,
         settings: Settings | None = None,

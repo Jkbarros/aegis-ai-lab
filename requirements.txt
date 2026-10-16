@@ -4,4 +4,7 @@ python-dotenv>=1.0.0,<2.0.0
 # Provedor OpenAI (Ollama/requests na Etapa 6)
 openai>=1.40.0,<2.0.0
 
-# Próximas etapas: pytest, streamlit, requests
+# Testes automatizados (Etapa 5)
+pytest>=8.0.0,<9.0.0
+
+# Próximas etapas: streamlit, requests

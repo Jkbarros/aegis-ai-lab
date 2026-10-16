@@ -1,0 +1,14 @@
+[project]
+name = "aegis-ai-lab"
+version = "0.1.0"
+description = "Laboratorio de testes de seguranca para aplicacoes com LLM"
+readme = "README.md"
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-ra --strict-markers"
+markers = [
+    "integration: testes que executam campanha completa ou biblioteca real",
+]

@@ -34,7 +34,7 @@ def main() -> int:
     print()
     print(mensagem_boas_vindas())
     print()
-    print("Próximo passo didático: python scripts/demo_etapa4.py")
+    print("Próximo passo didático: python -m pytest")
     return 0
 
 
