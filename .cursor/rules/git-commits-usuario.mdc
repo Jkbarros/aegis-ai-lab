@@ -1,0 +1,12 @@
+---
+description: Commits Git apenas pelo usuário (Julio) — agente não autoria commits
+alwaysApply: true
+---
+
+# Git e autoria de commits
+
+- **Nunca** execute `git commit`, `git push`, `git commit --amend`, `git rebase` interativo ou force push, a menos que o usuário peça explicitamente que você **somente sugira** os comandos para ele rodar.
+- **Todos os commits** deste repositório são feitos **apenas pelo usuário (Julio)**. O agente prepara código e documentação; o usuário revisa e commita.
+- Pode executar `git status`, `git diff`, `git init`, `git remote add` e `gh repo create` quando ajudar na configuração — sem criar commits em nome do usuário.
+- **Nunca** altere `git config` (user.name, user.email, credenciais).
+- Ao sugerir commit, indique `git add` seletivo, mensagem em português clara, e lembre de conferir que `.env` não entrou no stage.

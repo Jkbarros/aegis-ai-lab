@@ -1,0 +1,7 @@
+# Configuração local (.env)
+python-dotenv>=1.0.0,<2.0.0
+
+# Provedor OpenAI (Ollama/requests na Etapa 6)
+openai>=1.40.0,<2.0.0
+
+# Próximas etapas: pytest, streamlit, requests

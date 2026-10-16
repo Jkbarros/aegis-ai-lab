@@ -1,0 +1,27 @@
+# Ambiente virtual Python
+.venv/
+venv/
+env/
+
+# Cache e bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Relatórios gerados (mantemos a pasta, não os arquivos locais)
+reports/*.json
+reports/*.html
+
+# Editores e SO
+.idea/
+.vscode/
+*.swp
+Thumbs.db
+.DS_Store
+
+# Variáveis de ambiente (nunca versionar segredos reais)
+.env
+.env.local
+.env.*.local
+# .env.example é versionado de propósito (sem chaves reais)
