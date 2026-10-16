@@ -40,4 +40,6 @@ Depois abra o dashboard manualmente (`streamlit run app.py`) se estiver gravando
 
 ## Screenshots para o README
 
+Use o ambiente controlado: [`README_DEMO.md`](README_DEMO.md) e `scripts/prepare_readme_demo.ps1`.
+
 Capture e salve em `docs/screenshots/` (veja `docs/screenshots/README.md`).

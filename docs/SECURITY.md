@@ -61,6 +61,11 @@ python scripts/check_security_lab.py
 python -m pytest tests/test_security_lab.py
 ```
 
+## Mapeamento a frameworks (OWASP / MITRE / NIST)
+
+O laboratório inclui tags didáticas por caso de teste. Isso **não** substitui auditoria formal.
+Veja [`COMPLIANCE.md`](COMPLIANCE.md).
+
 ## Limitações honestas
 
 - Heurísticas de injection e redação **não** substituem revisão humana nem pentest completo.

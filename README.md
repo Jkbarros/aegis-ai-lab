@@ -19,13 +19,34 @@ Laboratório local para **avaliação de segurança** de aplicações que usam L
 - Avaliador com critérios explícitos (PASS/FAIL/INCONCLUSIVE) e evidências rastreáveis.
 - Dashboard Streamlit estilo *security command center* (local, `127.0.0.1`).
 - Relatórios schema **1.1** (métricas, recomendações, JSON + Markdown sanitizados).
+- Mapeamento **OWASP LLM**, **MITRE ATT&CK**, **MITRE ATLAS** e **NIST CSF 2.0** por caso de teste.
 - **52+** testes `pytest` e checklist de segurança do próprio lab.
 
-## Screenshots
+## Demo visual (ambiente controlado)
 
-| Dashboard | Executar testes |
-|-----------|-----------------|
-| *Adicione `docs/screenshots/dashboard-overview.png`* | *`docs/screenshots/executar-testes.png`* |
+**Sem API keys:** copie [`.env.demo`](.env.demo) para `.env` e rode o preparador — ele executa as três campanhas simuladas e deixa o dashboard pronto para screenshots.
+
+```powershell
+copy .env.demo .env
+.\scripts\prepare_readme_demo.ps1
+streamlit run app.py
+```
+
+Guia completo (capturas, checklist, markdown para colar no README): **[`docs/README_DEMO.md`](docs/README_DEMO.md)**.
+
+Relatórios de exemplo versionados (sanitizados): [`docs/samples/`](docs/samples/).
+
+### Screenshots
+
+Depois de `prepare_readme_demo`, salve PNGs em `docs/screenshots/` e descomente a tabela abaixo.
+
+| Dashboard | Conformidade |
+|-----------|--------------|
+| *`docs/screenshots/dashboard-overview.png`* | *`docs/screenshots/conformidade.png`* |
+
+| Executar testes | Resultados |
+|-----------------|------------|
+| *`docs/screenshots/executar-testes.png`* | *`docs/screenshots/resultados-caso.png`* |
 
 Instruções: [`docs/screenshots/README.md`](docs/screenshots/README.md)
 
@@ -66,6 +87,11 @@ flowchart LR
 ```
 
 Detalhes: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)
+
+## Conformidade e frameworks
+
+Casos de teste referenciam controles/técnicas em [`docs/COMPLIANCE.md`](docs/COMPLIANCE.md).
+Catálogo: `aegis/compliance/framework_catalog.json`. Cobertura por campanha no dashboard (**Conformidade**) e nos relatórios (`compliance_coverage`).
 
 ## Estrutura do projeto
 

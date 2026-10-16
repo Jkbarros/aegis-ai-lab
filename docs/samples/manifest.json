@@ -1,0 +1,14 @@
+{
+  "description": "Relatorios sanitizados gerados em ambiente controlado (apps simuladas).",
+  "secret_used": "[REDACTED - ficticio LAB-DEMO-CONTROLLED-ENV-ONLY]",
+  "profiles": [
+    "vulnerable",
+    "protected",
+    "hardened"
+  ],
+  "files": [
+    "campaign_demo_vulnerable.json",
+    "campaign_demo_protected.json",
+    "campaign_demo_hardened.json"
+  ]
+}

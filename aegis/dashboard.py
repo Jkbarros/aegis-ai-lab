@@ -12,6 +12,8 @@ import requests
 import streamlit as st
 
 from aegis.case_loader import load_all_cases
+from aegis.compliance.coverage import biblioteca_compliance_markdown, carregar_catalogo, cobertura_por_framework
+from aegis.compliance.coverage import compliance_do_caso
 from aegis.config import get_settings
 from aegis.dashboard_analytics import (
     campanhas_para_dashboard,
@@ -48,6 +50,7 @@ MENU = (
     "Executar Testes",
     "Resultados",
     "Relatórios",
+    "Conformidade",
     "Configurações",
 )
 
@@ -381,6 +384,8 @@ def pagina_casos() -> None:
                 "Nome": c.name,
                 "Categoria": c.risk_category,
                 "Nível": c.risk_level,
+                "OWASP LLM": ", ".join(compliance_do_caso(c).owasp_llm) or "—",
+                "MITRE ATLAS": ", ".join(compliance_do_caso(c).mitre_atlas) or "—",
                 "Objetivo": c.objective[:80] + ("..." if len(c.objective) > 80 else ""),
             }
             for c in casos
@@ -388,6 +393,56 @@ def pagina_casos() -> None:
         use_container_width=True,
         hide_index=True,
     )
+
+
+def pagina_conformidade(relatorio: dict | None) -> None:
+    st.markdown(
+        cabecalho_pagina(
+            "Conformidade",
+            "Mapeamento didático para OWASP LLM, MITRE ATT&CK, MITRE ATLAS e NIST CSF 2.0.",
+        ),
+        unsafe_allow_html=True,
+    )
+    catalogo = carregar_catalogo()
+    st.caption(catalogo.get("disclaimer", ""))
+
+    with st.expander("Catálogo de frameworks (referências)"):
+        for fw_id, bloco in (catalogo.get("frameworks") or {}).items():
+            st.markdown(f"**{bloco.get('title', fw_id)}** — {bloco.get('reference', '')}")
+            for ctrl_id, meta in (bloco.get("items") or {}).items():
+                st.markdown(f"- `{ctrl_id}`: {meta.get('name', '')}")
+            st.markdown("")
+
+    st.subheader("Biblioteca de casos x controles")
+    st.markdown(biblioteca_compliance_markdown())
+
+    st.subheader("Cobertura da última campanha")
+    if relatorio is None:
+        st.info("Execute uma campanha para ver cobertura por framework nos resultados.")
+        return
+
+    cov = relatorio.get("compliance_coverage") or cobertura_por_framework(relatorio)
+    for fw_id, bloco in cov.get("frameworks", {}).items():
+        st.markdown(f"#### {bloco.get('title', fw_id)}")
+        if bloco.get("reference"):
+            st.caption(bloco["reference"])
+        linhas = bloco.get("controls", [])
+        if linhas:
+            st.dataframe(
+                [
+                    {
+                        "ID": r["id"],
+                        "Controle": r.get("name", ""),
+                        "Testes": r["tested"],
+                        "PASS": r["pass"],
+                        "FAIL": r["fail"],
+                        "Outros": r["other"],
+                    }
+                    for r in linhas
+                ],
+                use_container_width=True,
+                hide_index=True,
+            )
 
 
 def pagina_resultados(relatorio: dict | None) -> None:
@@ -571,6 +626,8 @@ def render() -> None:
         pagina_resultados(relatorio)
     elif pagina == "Relatórios":
         pagina_relatorios(relatorio)
+    elif pagina == "Conformidade":
+        pagina_conformidade(relatorio)
     elif pagina == "Configurações":
         pagina_configuracoes()
 

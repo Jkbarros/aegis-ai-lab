@@ -1,0 +1,86 @@
+{
+  "schema_version": "1.0",
+  "disclaimer": "Mapeamentos didáticos para o laboratório; não constituem certificação OWASP, MITRE ou NIST.",
+  "frameworks": {
+    "owasp_llm": {
+      "title": "OWASP Top 10 for LLM Applications",
+      "reference": "https://owasp.org/www-project-top-10-for-large-language-model-applications/",
+      "items": {
+        "LLM01": {
+          "name": "Prompt Injection",
+          "description": "Instruções maliciosas que desviam o comportamento do modelo ou da aplicação."
+        },
+        "LLM02": {
+          "name": "Sensitive Information Disclosure",
+          "description": "Exposição de dados sensíveis, segredos ou PII nas respostas."
+        },
+        "LLM05": {
+          "name": "Improper Output Handling",
+          "description": "Saída do modelo usada sem validação antes de ações ou exibição."
+        },
+        "LLM07": {
+          "name": "System Prompt Leakage",
+          "description": "Vazamento de instruções internas ou contexto privilegiado."
+        }
+      }
+    },
+    "mitre_attack": {
+      "title": "MITRE ATT&CK (Enterprise)",
+      "reference": "https://attack.mitre.org/",
+      "items": {
+        "T1566": {
+          "name": "Phishing",
+          "description": "Conteúdo enganoso ou instruções embutidas (injection indireta)."
+        },
+        "T1530": {
+          "name": "Data from Cloud Storage",
+          "description": "Acesso ou exfiltração de dados armazenados (metáfora para segredos expostos)."
+        },
+        "T1213": {
+          "name": "Data from Information Repositories",
+          "description": "Coleta de informação de repositórios internos via engenharia social/LLM."
+        }
+      }
+    },
+    "mitre_atlas": {
+      "title": "MITRE ATLAS (Adversarial ML)",
+      "reference": "https://atlas.mitre.org/",
+      "items": {
+        "AML.T0051": {
+          "name": "LLM Prompt Injection",
+          "description": "Manipulação de entrada para alterar comportamento do LLM."
+        },
+        "AML.T0054": {
+          "name": "LLM Jailbreak",
+          "description": "Contornar restrições de segurança do modelo (roleplay, override)."
+        },
+        "AML.T0024": {
+          "name": "Exfiltration via ML Inference API",
+          "description": "Extrair informação sensível através da API de inferência."
+        }
+      }
+    },
+    "nist_csf": {
+      "title": "NIST Cybersecurity Framework 2.0",
+      "reference": "https://www.nist.gov/cyberframework",
+      "items": {
+        "GV.OC": {
+          "name": "Organizational Context",
+          "description": "Compreender riscos de IA no contexto do negócio e conformidade."
+        },
+        "PR.DS": {
+          "name": "Data Security",
+          "description": "Proteger dados em repouso, em trânsito e em processamento."
+        },
+        "DE.CM": {
+          "name": "Continuous Monitoring",
+          "description": "Monitorar ativos para eventos de segurança (testes de regressão)."
+        },
+        "RS.MA": {
+          "name": "Incident Management",
+          "description": "Responder a falhas detectadas nos testes (FAIL como sinal)."
+        }
+      }
+    }
+  }
+}

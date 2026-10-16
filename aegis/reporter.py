@@ -12,6 +12,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from aegis.compliance.coverage import anexar_compliance_ao_relatorio
 from aegis.config import Settings, get_settings
 from aegis.security.report_safety import sanitize_report_document
 from aegis.metrics import (
@@ -59,6 +60,7 @@ def resultado_para_dict(resultado: CaseExecutionResult) -> dict[str, Any]:
             {"code": e.code, "message": e.message, "snippet": e.snippet}
             for e in veredito.evidence
         ],
+        "compliance": caso.compliance.to_dict(),
     }
 
 
@@ -93,6 +95,7 @@ def montar_relatorio(
     doc["metrics"] = metricas_para_dict(calcular_metricas(doc))
     doc["recommendations"] = gerar_recomendacoes(doc)
     doc["limitations"] = list(LIMITACOES_PADRAO)
+    doc = anexar_compliance_ao_relatorio(doc)
     return doc
 
 

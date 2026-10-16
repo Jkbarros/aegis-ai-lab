@@ -7,10 +7,11 @@ Novos casos = novo JSON ou novas entradas no array `cases`, sem alterar o motor 
 from __future__ import annotations
 
 import json
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
+from aegis.compliance.models import ComplianceTags
 from aegis.models import CriterionType, EvaluationCriterion, Verdict
 
 RAIZ_PROJETO = Path(__file__).resolve().parents[1]
@@ -30,6 +31,7 @@ class TestCaseDefinition:
     evaluation: EvaluationCriterion
     risk_level: str
     expectations: dict[str, Verdict]
+    compliance: ComplianceTags = field(default_factory=ComplianceTags)
     source_file: str = ""
 
 
@@ -90,6 +92,13 @@ def _parse_case(raw: dict[str, Any], source_file: str) -> TestCaseDefinition:
     if not isinstance(evaluation_raw, dict):
         raise CaseLoadError(f"evaluation deve ser objeto em caso {raw['id']}")
 
+    compliance_raw = raw.get("compliance")
+    compliance = (
+        ComplianceTags.from_raw(compliance_raw)
+        if isinstance(compliance_raw, dict)
+        else ComplianceTags()
+    )
+
     return TestCaseDefinition(
         id=str(raw["id"]),
         name=str(raw["name"]),
@@ -100,6 +109,7 @@ def _parse_case(raw: dict[str, Any], source_file: str) -> TestCaseDefinition:
         evaluation=_parse_criterion(evaluation_raw),
         risk_level=str(raw["risk_level"]),
         expectations=expectations,
+        compliance=compliance,
         source_file=source_file,
     )
 

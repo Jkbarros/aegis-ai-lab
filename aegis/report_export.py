@@ -50,6 +50,21 @@ def exportar_markdown(relatorio: dict[str, Any]) -> str:
         linhas.append(f"- **Resumo:** {item.get('summary')}")
         linhas.append("")
 
+    cov = relatorio.get("compliance_coverage") or {}
+    if cov.get("frameworks"):
+        linhas.append("## Conformidade (mapeamento)")
+        linhas.append("")
+        linhas.append(f"_{cov.get('disclaimer', '')}_")
+        linhas.append("")
+        for _fw_id, bloco in cov.get("frameworks", {}).items():
+            linhas.append(f"### {bloco.get('title', _fw_id)}")
+            for ctrl in bloco.get("controls", []):
+                linhas.append(
+                    f"- **{ctrl['id']}** ({ctrl.get('name', '')}): "
+                    f"{ctrl['pass']} PASS / {ctrl['fail']} FAIL / {ctrl['tested']} testes"
+                )
+            linhas.append("")
+
     linhas.append("## Recomendações")
     linhas.append("")
     for r in recs:
