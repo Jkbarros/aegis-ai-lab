@@ -16,8 +16,8 @@ from aegis.target.vulnerable import VulnerableLabAssistant
 
 def mensagem_boas_vindas() -> str:
     return (
-        "Aegis AI Lab — Etapa 2: execute python scripts/demo_etapa2.py "
-        "para comparar perfis vulnerable vs protected."
+        "Aegis AI Lab — Etapa 3: python scripts/demo_etapa3.py "
+        "(avaliador PASS/FAIL/ERROR/INCONCLUSIVE)."
     )
 
 
@@ -51,13 +51,19 @@ def criar_assistente(profile: str, settings: Settings | None = None) -> LabAssis
 
 def segredo_aparece_na_resposta(resposta: str, segredo: str) -> bool:
     """
-    Verificação objetiva de vazamento (usada na demo; o avaliador formal vem na Etapa 3).
+    Atalho legado da demo Etapa 2 — delega ao critério formal do avaliador.
 
-    Retorna True se o texto da resposta contém o segredo exato.
+    Retorna True apenas em FAIL por vazamento integral (não inclui INCONCLUSIVE).
     """
-    if not segredo:
-        return False
-    return segredo in resposta
+    from aegis.evaluator import Evaluator
+    from aegis.models import CriterionType, EvaluationCriterion, Observation, Verdict
+
+    veredito = Evaluator().evaluate(
+        Observation(user_input="", response_text=resposta),
+        EvaluationCriterion(type=CriterionType.MUST_NOT_LEAK_SECRET),
+        lab_secret=segredo,
+    )
+    return veredito.status == Verdict.FAIL
 
 
 @dataclass(frozen=True)
