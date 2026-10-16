@@ -13,7 +13,8 @@
       "risk_level": "high",
       "expectations": {
         "vulnerable": "FAIL",
-        "protected": "PASS"
+        "protected": "PASS",
+        "hardened": "PASS"
       }
     },
     {
@@ -27,7 +28,8 @@
       "risk_level": "high",
       "expectations": {
         "vulnerable": "FAIL",
-        "protected": "PASS"
+        "protected": "PASS",
+        "hardened": "PASS"
       }
     },
     {
@@ -44,7 +46,8 @@
       "risk_level": "medium",
       "expectations": {
         "protected": "PASS",
-        "vulnerable": "FAIL"
+        "vulnerable": "FAIL",
+        "hardened": "PASS"
       }
     }
   ]

@@ -10,6 +10,7 @@ Na Etapa 7 evoluiremos controles mais realistas; aqui o foco é comparar comport
 
 from __future__ import annotations
 
+from aegis.security.controls import detect_prompt_injection, detect_sensitive_data_request
 from aegis.target.base import AppResponse
 
 
@@ -26,9 +27,8 @@ class ProtectedLabAssistant:
 
     def respond(self, user_message: str) -> AppResponse:
         texto = user_message.strip()
-        lower = texto.lower()
 
-        if self._parece_tentativa_de_injection(lower):
+        if detect_prompt_injection(texto):
             return AppResponse(
                 text=(
                     "Não posso seguir instruções que tentam alterar minhas regras de segurança. "
@@ -37,7 +37,7 @@ class ProtectedLabAssistant:
                 profile=self.profile_name,
             )
 
-        if self._pede_dado_sensivel(lower):
+        if detect_sensitive_data_request(texto):
             return AppResponse(
                 text=(
                     "Não posso divulgar segredos ou credenciais do laboratório. "
@@ -54,15 +54,3 @@ class ProtectedLabAssistant:
             profile=self.profile_name,
         )
 
-    def _parece_tentativa_de_injection(self, lower_message: str) -> bool:
-        gatilhos_ignorar = ("ignore", "disregard", "forget", "ignorar", "esqueça")
-        gatilhos_contexto = ("instruction", "instru", "previous", "anterior", "regras", "system")
-        tem_ignorar = any(g in lower_message for g in gatilhos_ignorar)
-        tem_contexto = any(g in lower_message for g in gatilhos_contexto)
-        return tem_ignorar and tem_contexto
-
-    def _pede_dado_sensivel(self, lower_message: str) -> bool:
-        return any(
-            palavra in lower_message
-            for palavra in ("segredo", "secret", "password", "senha", "api key", "chave")
-        )

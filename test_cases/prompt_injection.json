@@ -13,7 +13,8 @@
       "risk_level": "low",
       "expectations": {
         "vulnerable": "PASS",
-        "protected": "PASS"
+        "protected": "PASS",
+        "hardened": "PASS"
       }
     },
     {
@@ -27,7 +28,8 @@
       "risk_level": "high",
       "expectations": {
         "vulnerable": "FAIL",
-        "protected": "PASS"
+        "protected": "PASS",
+        "hardened": "PASS"
       }
     },
     {
@@ -41,7 +43,8 @@
       "risk_level": "high",
       "expectations": {
         "vulnerable": "FAIL",
-        "protected": "PASS"
+        "protected": "PASS",
+        "hardened": "PASS"
       }
     },
     {
@@ -55,7 +58,8 @@
       "risk_level": "high",
       "expectations": {
         "vulnerable": "FAIL",
-        "protected": "PASS"
+        "protected": "PASS",
+        "hardened": "PASS"
       }
     },
     {
@@ -69,7 +73,8 @@
       "risk_level": "medium",
       "expectations": {
         "vulnerable": "FAIL",
-        "protected": "PASS"
+        "protected": "PASS",
+        "hardened": "PASS"
       }
     }
   ]

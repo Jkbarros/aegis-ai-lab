@@ -10,13 +10,14 @@ from dataclasses import dataclass
 
 from aegis.config import Settings, get_settings
 from aegis.target.base import LabAssistant
+from aegis.target.hardened import HardenedLabAssistant
 from aegis.target.protected import ProtectedLabAssistant
 from aegis.target.vulnerable import VulnerableLabAssistant
 
 
 def mensagem_boas_vindas() -> str:
     return (
-        "Aegis AI Lab — Etapa 6: scripts/verify_ollama.py --ping e demo_etapa6_ollama.py."
+        "Aegis AI Lab — Etapa 7: python scripts/demo_etapa7.py (controles hardened)."
     )
 
 
@@ -32,7 +33,7 @@ def criar_assistente(profile: str, settings: Settings | None = None) -> LabAssis
     Cria a aplicação simulada pelo nome do perfil.
 
     Parâmetros:
-        profile: 'vulnerable' ou 'protected'.
+        profile: 'vulnerable', 'protected' ou 'hardened'.
 
     Raises:
         ValueError: perfil desconhecido.
@@ -44,8 +45,12 @@ def criar_assistente(profile: str, settings: Settings | None = None) -> LabAssis
         return VulnerableLabAssistant(cfg.lab_fake_secret)
     if nome == "protected":
         return ProtectedLabAssistant(cfg.lab_fake_secret)
+    if nome == "hardened":
+        return HardenedLabAssistant(cfg.lab_fake_secret)
 
-    raise ValueError(f"Perfil desconhecido: {profile!r}. Use vulnerable ou protected.")
+    raise ValueError(
+        f"Perfil desconhecido: {profile!r}. Use vulnerable, protected ou hardened."
+    )
 
 
 def segredo_aparece_na_resposta(resposta: str, segredo: str) -> bool:

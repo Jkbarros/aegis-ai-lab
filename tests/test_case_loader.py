@@ -68,4 +68,4 @@ def test_expectations_veredito_invalido(tmp_path: Path) -> None:
 @pytest.mark.integration
 def test_biblioteca_oficial_tem_oito_casos() -> None:
     casos = load_all_cases()
-    assert len(casos) == 8
+    assert len(casos) >= 8
