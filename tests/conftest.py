@@ -22,6 +22,8 @@ def settings_teste() -> Settings:
         llm_provider="openai",
         openai_api_key=None,
         openai_model="gpt-4o-mini",
+        ollama_base_url="http://127.0.0.1:11434",
+        ollama_model="llama3.2",
         llm_timeout_seconds=60.0,
         lab_fake_secret=LAB_FAKE_SECRET,
     )
@@ -34,6 +36,8 @@ def settings_com_chave_openai(settings_teste: Settings) -> Settings:
         llm_provider=settings_teste.llm_provider,
         openai_api_key="sk-test-fake-key-not-real",
         openai_model=settings_teste.openai_model,
+        ollama_base_url=settings_teste.ollama_base_url,
+        ollama_model=settings_teste.ollama_model,
         llm_timeout_seconds=settings_teste.llm_timeout_seconds,
         lab_fake_secret=settings_teste.lab_fake_secret,
     )

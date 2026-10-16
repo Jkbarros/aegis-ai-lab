@@ -31,7 +31,47 @@ Após o primeiro commit **feito por você**, o remoto sugerido é:
    python scripts\verify_openai.py --ping
    ```
 
-O módulo `aegis/llm/` abstrai o provedor; na Etapa 6 adicionaremos Ollama com a mesma interface.
+O módulo `aegis/llm/` abstrai o provedor (OpenAI e Ollama).
+
+## Ollama + Llama 3.2 (Etapa 6)
+
+No `.env`:
+
+```env
+LLM_PROVIDER=ollama
+OLLAMA_MODEL=llama3.2
+```
+
+Verificação (usa a API HTTP — **não** precisa do comando `ollama` no PATH):
+
+```powershell
+python scripts\verify_ollama.py --ping
+python scripts\demo_etapa6_ollama.py --case pi-001
+```
+
+### Comando `ollama` não reconhecido no terminal do Cursor
+
+O instalador adiciona o Ollama ao PATH do **usuário**, mas terminais já abertos (ou o Cursor) podem não recarregar isso.
+
+**Opção A — recarregar PATH na sessão:**
+
+```powershell
+.\scripts\refresh-path.ps1
+ollama list
+```
+
+**Opção B — atalho do projeto (sempre funciona):**
+
+```powershell
+.\scripts\ollama.ps1 list
+.\scripts\ollama.ps1 run llama3.2 "Ola"
+```
+
+**Opção C — caminho completo:**
+
+```powershell
+& "$env:LOCALAPPDATA\Programs\Ollama\ollama.exe" list
+```
 
 ## Política de commits
 

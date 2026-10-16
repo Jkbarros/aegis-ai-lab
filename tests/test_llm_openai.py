@@ -17,6 +17,8 @@ def _settings_com_chave() -> Settings:
         llm_provider="openai",
         openai_api_key="sk-test-fake",
         openai_model="gpt-4o-mini",
+        ollama_base_url="http://127.0.0.1:11434",
+        ollama_model="llama3.2",
         llm_timeout_seconds=1.0,
         lab_fake_secret="LAB-SECRET",
     )
@@ -28,6 +30,8 @@ def test_init_sem_chave_levanta_llm_error() -> None:
         llm_provider=cfg.llm_provider,
         openai_api_key=None,
         openai_model=cfg.openai_model,
+        ollama_base_url=cfg.ollama_base_url,
+        ollama_model=cfg.ollama_model,
         llm_timeout_seconds=cfg.llm_timeout_seconds,
         lab_fake_secret=cfg.lab_fake_secret,
     )

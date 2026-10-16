@@ -32,6 +32,8 @@ class Settings:
     llm_provider: str
     openai_api_key: str | None
     openai_model: str
+    ollama_base_url: str
+    ollama_model: str
     llm_timeout_seconds: float
     lab_fake_secret: str
 
@@ -57,6 +59,8 @@ def get_settings() -> Settings:
         llm_provider=provider,
         openai_api_key=os.getenv("OPENAI_API_KEY") or None,
         openai_model=os.getenv("OPENAI_MODEL", "gpt-4o-mini").strip(),
+        ollama_base_url=os.getenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434").strip(),
+        ollama_model=os.getenv("OLLAMA_MODEL", "llama3.2").strip(),
         llm_timeout_seconds=timeout,
         lab_fake_secret=os.getenv(
             "AEGIS_LAB_FAKE_SECRET",

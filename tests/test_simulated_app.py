@@ -13,6 +13,8 @@ def _settings_teste() -> Settings:
         llm_provider="openai",
         openai_api_key=None,
         openai_model="gpt-4o-mini",
+        ollama_base_url="http://127.0.0.1:11434",
+        ollama_model="llama3.2",
         llm_timeout_seconds=60.0,
         lab_fake_secret=LAB_FAKE_SECRET,
     )
