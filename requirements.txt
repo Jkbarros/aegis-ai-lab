@@ -12,3 +12,4 @@ pytest>=8.0.0,<9.0.0
 
 # Dashboard (Etapa 8)
 streamlit>=1.28.0,<2.0.0
+plotly>=5.18.0,<6.0.0
