@@ -20,7 +20,7 @@ def main() -> int:
         0 se tudo ok; 1 se alguma verificação falhar.
     """
     print("=" * 60)
-    print("Aegis AI Lab — verificação do ambiente (Etapa 1)")
+    print("Aegis AI Lab — verificação do ambiente")
     print("=" * 60)
 
     versao = f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
@@ -34,7 +34,7 @@ def main() -> int:
     print()
     print(mensagem_boas_vindas())
     print()
-    print("Se você viu esta mensagem sem erros, a Etapa 1 está no caminho certo.")
+    print("Próximo passo didático: python scripts/demo_etapa2.py")
     return 0
 
 
