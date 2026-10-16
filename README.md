@@ -20,7 +20,7 @@ Laboratório local para **avaliação de segurança** de aplicações que usam L
 - Dashboard Streamlit estilo *security command center* (local, `127.0.0.1`).
 - Relatórios schema **1.1** (métricas, recomendações, JSON + Markdown sanitizados).
 - Mapeamento **OWASP LLM**, **MITRE ATT&CK**, **MITRE ATLAS** e **NIST CSF 2.0** por caso de teste.
-- **52+** testes `pytest` e checklist de segurança do próprio lab.
+- **16** casos de teste (8 oficiais + import JSON) e **60** testes `pytest`.
 
 ## Demo visual (ambiente controlado)
 
@@ -38,17 +38,26 @@ Relatórios de exemplo versionados (sanitizados): [`docs/samples/`](docs/samples
 
 ### Screenshots
 
-Depois de `prepare_readme_demo`, salve PNGs em `docs/screenshots/` e descomente a tabela abaixo.
+| Casos de teste (16) | Executar campanha |
+|---------------------|-------------------|
+| ![Casos de teste](docs/screenshots/casos-de-teste.png) | ![Executar testes](docs/screenshots/executar-testes.png) |
 
-| Dashboard | Conformidade |
-|-----------|--------------|
-| *`docs/screenshots/dashboard-overview.png`* | *`docs/screenshots/conformidade.png`* |
+| Resultados | Conformidade (OWASP LLM) |
+|------------|--------------------------|
+| ![Resultados](docs/screenshots/resultados-caso.png) | ![Conformidade OWASP](docs/screenshots/conformidade-owasp.png) |
 
-| Executar testes | Resultados |
-|-----------------|------------|
-| *`docs/screenshots/executar-testes.png`* | *`docs/screenshots/resultados-caso.png`* |
+<details>
+<summary>Mais capturas — frameworks (MITRE / NIST)</summary>
 
-Instruções: [`docs/screenshots/README.md`](docs/screenshots/README.md)
+| MITRE ATT&CK | MITRE ATLAS |
+|--------------|-------------|
+| ![MITRE ATT&CK](docs/screenshots/conformidade-mitre-attack.png) | ![MITRE ATLAS](docs/screenshots/conformidade-mitre-atlas.png) |
+
+![NIST CSF 2.0](docs/screenshots/conformidade-nist.png)
+
+</details>
+
+Mais arquivos e nomes: [`docs/screenshots/`](docs/screenshots/).
 
 ## Início rápido
 

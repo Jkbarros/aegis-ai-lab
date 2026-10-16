@@ -1,0 +1,18 @@
+Arquivos versionados nesta pasta:
+
+  casos-de-teste.png
+  executar-testes.png
+  resultados-caso.png
+  conformidade-owasp.png
+  conformidade-mitre-attack.png
+  conformidade-mitre-atlas.png
+  conformidade-nist.png
+
+Opcional (LinkedIn):
+
+  linkedin-cover.png
+
+Regenerar demo antes de novas capturas:
+  copy .env.demo .env
+  .\scripts\prepare_readme_demo.ps1
+  streamlit run app.py
