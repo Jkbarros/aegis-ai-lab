@@ -13,6 +13,14 @@ from pathlib import Path
 from typing import Any
 
 from aegis.config import Settings, get_settings
+from aegis.metrics import (
+    LIMITACOES_PADRAO,
+    calcular_metricas,
+    comparar_relatorios,
+    gerar_recomendacoes,
+    metricas_para_dict,
+)
+from aegis.report_export import exportar_markdown
 from aegis.test_runner import CampaignSummary, CaseExecutionResult, TestRunner
 
 RAIZ = Path(__file__).resolve().parents[1]
@@ -64,10 +72,10 @@ def montar_relatorio(
     *,
     notas: str = "",
 ) -> dict[str, Any]:
-    """Monta o documento completo da campanha."""
+    """Monta o documento completo da campanha (schema 1.1 com métricas)."""
     cfg = settings or get_settings()
-    return {
-        "schema_version": "1.0",
+    doc: dict[str, Any] = {
+        "schema_version": "1.1",
         "generated_at": _agora_iso(),
         "lab": {
             "llm_provider": cfg.llm_provider,
@@ -81,6 +89,10 @@ def montar_relatorio(
         "summary": resumo_para_dict(resumo),
         "results": [resultado_para_dict(r) for r in resultados],
     }
+    doc["metrics"] = metricas_para_dict(calcular_metricas(doc))
+    doc["recommendations"] = gerar_recomendacoes(doc)
+    doc["limitations"] = list(LIMITACOES_PADRAO)
+    return doc
 
 
 def salvar_relatorio(
@@ -99,7 +111,15 @@ def salvar_relatorio(
     with caminho.open("w", encoding="utf-8") as arquivo:
         json.dump(relatorio, arquivo, ensure_ascii=False, indent=2)
 
+    md_path = caminho.with_suffix(".md")
+    md_path.write_text(exportar_markdown(relatorio), encoding="utf-8")
+
     return caminho
+
+
+def comparar_campanhas_salvas(caminho_a: Path, caminho_b: Path) -> dict[str, Any]:
+    """Carrega dois JSON de reports/ e devolve comparação estruturada."""
+    return comparar_relatorios(carregar_relatorio(caminho_a), carregar_relatorio(caminho_b))
 
 
 def listar_relatorios(pasta: Path | None = None) -> list[Path]:

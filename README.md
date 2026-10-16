@@ -2,7 +2,7 @@
 
 Laboratório local para testes de segurança em aplicações que usam modelos de linguagem (LLMs).
 
-**Status:** Etapa 8 — dashboard Streamlit.
+**Status:** Etapa 9 — métricas, comparação de campanhas e export Markdown.
 
 Use apenas em aplicações próprias, modelos locais e ambientes autorizados.
 
@@ -125,7 +125,21 @@ Ou:
 .\scripts\run_dashboard.ps1
 ```
 
-Na barra lateral: escolha o perfil (`vulnerable`, `protected`, `hardened`), filtros e **Executar campanha**. Relatórios vão para `reports/` e podem ser exportados em JSON.
+Na barra lateral: escolha o perfil (`vulnerable`, `protected`, `hardened`), filtros e **Executar campanha**. Relatórios vão para `reports/` (JSON + Markdown lado a lado).
+
+Na aba **Relatórios e métricas**: definições das taxas, recomendações, comparação entre duas campanhas salvas e download JSON/Markdown.
+
+## Métricas e relatórios (Etapa 9)
+
+- Schema de relatório `1.1` com blocos `metrics`, `recommendations` e `limitations`.
+- Taxas (PASS/FAIL/ERROR/INCONCLUSIVE) usam o **total de casos** como denominador; INCONCLUSIVE não conta como aprovação.
+- `expectation_match_rate` quando o JSON de casos define `expected_verdict`.
+
+Demo no terminal (gera campanhas se `reports/` estiver vazio):
+
+```powershell
+python scripts\demo_etapa9.py
+```
 
 Verificação de ambiente (terminal):
 

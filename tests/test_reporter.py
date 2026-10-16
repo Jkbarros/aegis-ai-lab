@@ -33,6 +33,8 @@ def test_salvar_relatorio_roundtrip(tmp_path: Path) -> None:
     assert caminho.is_file()
     payload = json.loads(caminho.read_text(encoding="utf-8"))
     assert payload["summary"]["total"] == len(resultados)
+    assert payload["schema_version"] == "1.1"
+    assert caminho.with_suffix(".md").is_file()
 
 
 def test_executar_e_salvar(tmp_path: Path, monkeypatch) -> None:
