@@ -8,3 +8,5 @@ font = "sans serif"
 
 [server]
 headless = true
+# Etapa 10: dashboard apenas em loopback local por padrão
+address = "127.0.0.1"

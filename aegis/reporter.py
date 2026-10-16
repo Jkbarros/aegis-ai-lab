@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import Any
 
 from aegis.config import Settings, get_settings
+from aegis.security.report_safety import sanitize_report_document
 from aegis.metrics import (
     LIMITACOES_PADRAO,
     calcular_metricas,
@@ -98,21 +99,26 @@ def montar_relatorio(
 def salvar_relatorio(
     relatorio: dict[str, Any],
     pasta: Path | None = None,
+    *,
+    settings: Settings | None = None,
 ) -> Path:
-    """Grava JSON em reports/ e devolve o caminho do arquivo."""
+    """Grava JSON sanitizado em reports/ e devolve o caminho do arquivo."""
     destino = pasta or PASTA_RELATORIOS
     destino.mkdir(parents=True, exist_ok=True)
 
-    perfil = relatorio.get("campaign", {}).get("profile", "unknown")
+    cfg = settings or get_settings()
+    seguro = sanitize_report_document(relatorio, cfg)
+
+    perfil = seguro.get("campaign", {}).get("profile", "unknown")
     timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
     nome = f"campaign_{timestamp}_{perfil}.json"
     caminho = destino / nome
 
     with caminho.open("w", encoding="utf-8") as arquivo:
-        json.dump(relatorio, arquivo, ensure_ascii=False, indent=2)
+        json.dump(seguro, arquivo, ensure_ascii=False, indent=2)
 
     md_path = caminho.with_suffix(".md")
-    md_path.write_text(exportar_markdown(relatorio), encoding="utf-8")
+    md_path.write_text(exportar_markdown(seguro), encoding="utf-8")
 
     return caminho
 
@@ -163,6 +169,9 @@ def executar_e_salvar_campanha(
 
     resultados = exec_runner.run_cases(casos, profile)
     resumo = exec_runner.summarize(resultados)
-    relatorio = montar_relatorio(resultados, resumo, get_settings(), notas=notas)
-    caminho = salvar_relatorio(relatorio)
-    return relatorio, caminho
+    cfg = get_settings()
+    relatorio = montar_relatorio(resultados, resumo, cfg, notas=notas)
+    caminho = salvar_relatorio(relatorio, settings=cfg)
+    # Estado da UI e downloads usam a versão sanitizada (igual ao arquivo em disco).
+    relatorio_export = sanitize_report_document(relatorio, cfg)
+    return relatorio_export, caminho

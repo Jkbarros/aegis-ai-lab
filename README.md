@@ -2,7 +2,7 @@
 
 Laboratório local para testes de segurança em aplicações que usam modelos de linguagem (LLMs).
 
-**Status:** Etapa 9 — métricas, comparação de campanhas e export Markdown.
+**Status:** Etapa 10 — revisão de segurança do próprio lab (`docs/SECURITY.md`).
 
 Use apenas em aplicações próprias, modelos locais e ambientes autorizados.
 
@@ -139,6 +139,26 @@ Demo no terminal (gera campanhas se `reports/` estiver vazio):
 
 ```powershell
 python scripts\demo_etapa9.py
+```
+
+## Segurança do lab (Etapa 10)
+
+Política de uso, segredos, relatórios sanitizados e Streamlit local:
+
+- Documento: [`docs/SECURITY.md`](docs/SECURITY.md)
+
+Checklist automatizado:
+
+```powershell
+python scripts\check_security_lab.py
+python scripts\demo_etapa10.py
+python -m pytest tests/test_security_lab.py
+```
+
+Dependências (auditoria opcional):
+
+```powershell
+pip audit
 ```
 
 Verificação de ambiente (terminal):

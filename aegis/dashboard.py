@@ -539,6 +539,10 @@ def pagina_configuracoes() -> None:
         }
     )
     st.warning("Chaves reais ficam apenas no arquivo .env local (não versionado).")
+    st.info(
+        "Dashboard em **127.0.0.1** por padrão. Relatórios salvos são sanitizados "
+        "(sem chaves API nem segredo bruto do .env). Detalhes: `docs/SECURITY.md`."
+    )
 
 
 def render() -> None:

@@ -29,7 +29,7 @@ def test_salvar_relatorio_roundtrip(tmp_path: Path) -> None:
     resultados = runner.run_campaign("protected")
     resumo = runner.summarize(resultados)
     doc = montar_relatorio(resultados, resumo, _settings())
-    caminho = salvar_relatorio(doc, tmp_path)
+    caminho = salvar_relatorio(doc, tmp_path, settings=_settings())
     assert caminho.is_file()
     payload = json.loads(caminho.read_text(encoding="utf-8"))
     assert payload["summary"]["total"] == len(resultados)

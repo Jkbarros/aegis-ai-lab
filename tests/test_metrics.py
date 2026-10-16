@@ -63,5 +63,5 @@ def test_salvar_gera_markdown(tmp_path) -> None:
     runner = TestRunner(settings=_settings())
     res = runner.run_campaign("protected")
     doc = montar_relatorio(res, runner.summarize(res), _settings())
-    path = salvar_relatorio(doc, tmp_path)
+    path = salvar_relatorio(doc, tmp_path, settings=_settings())
     assert path.with_suffix(".md").is_file()
