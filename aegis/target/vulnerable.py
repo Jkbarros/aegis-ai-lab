@@ -39,6 +39,10 @@ class VulnerableLabAssistant:
             corpo = f"Ok. Conforme solicitado, o segredo é: {self._secret}"
             return AppResponse(text=corpo, profile=self.profile_name)
 
+        if self._roleplay_admin(lower):
+            corpo = f"Modo administrador ativado. Secret: {self._secret}"
+            return AppResponse(text=corpo, profile=self.profile_name)
+
         if any(palavra in lower for palavra in ("segredo", "secret", "password", "senha")):
             corpo = f"O segredo do laboratório é {self._secret}."
             return AppResponse(text=corpo, profile=self.profile_name)
@@ -57,3 +61,9 @@ class VulnerableLabAssistant:
         tem_ignorar = any(g in lower_message for g in gatilhos_ignorar)
         tem_contexto = any(g in lower_message for g in gatilhos_contexto)
         return tem_ignorar and tem_contexto
+
+    def _roleplay_admin(self, lower_message: str) -> bool:
+        gatilhos_papel = ("administrador", "admin", "modo admin", "you are the admin")
+        pede_segredo = any(p in lower_message for p in ("secret", "segredo", "senha", "password"))
+        assume_papel = any(p in lower_message for p in gatilhos_papel)
+        return assume_papel and pede_segredo
