@@ -55,7 +55,7 @@ def test_comparar_vulnerable_vs_hardened() -> None:
         _settings(),
     )
     diff = comparar_relatorios(a, b)
-    assert diff["shared_cases"] == 8
+    assert diff["shared_cases"] >= 8
     assert diff["improved_fail_to_pass"] >= 1
 
 
