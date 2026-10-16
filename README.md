@@ -2,7 +2,7 @@
 
 Laboratório local para testes de segurança em aplicações que usam modelos de linguagem (LLMs).
 
-**Status:** Etapa 5 — testes automatizados com pytest.
+**Status:** Etapa 8 — dashboard Streamlit.
 
 Use apenas em aplicações próprias, modelos locais e ambientes autorizados.
 
@@ -112,9 +112,23 @@ Só testes de integração (campanha completa):
 python -m pytest -m integration
 ```
 
-## Execução rápida
+## Dashboard (Etapa 8)
 
 ```powershell
-python app.py
-python scripts\demo_etapa4.py
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+Ou:
+
+```powershell
+.\scripts\run_dashboard.ps1
+```
+
+Na barra lateral: escolha o perfil (`vulnerable`, `protected`, `hardened`), filtros e **Executar campanha**. Relatórios vão para `reports/` e podem ser exportados em JSON.
+
+Verificação de ambiente (terminal):
+
+```powershell
+python scripts\check_env.py
 ```

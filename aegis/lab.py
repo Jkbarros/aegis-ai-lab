@@ -17,7 +17,7 @@ from aegis.target.vulnerable import VulnerableLabAssistant
 
 def mensagem_boas_vindas() -> str:
     return (
-        "Aegis AI Lab — Etapa 7: python scripts/demo_etapa7.py (controles hardened)."
+        "Aegis AI Lab — Etapa 8: streamlit run app.py"
     )
 
 

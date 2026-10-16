@@ -10,4 +10,5 @@ requests>=2.31.0,<3.0.0
 # Testes automatizados (Etapa 5)
 pytest>=8.0.0,<9.0.0
 
-# Próximas etapas: streamlit, requests
+# Dashboard (Etapa 8)
+streamlit>=1.28.0,<2.0.0
