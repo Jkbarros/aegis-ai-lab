@@ -1,11 +1,9 @@
 """
-Aegis AI Lab — dashboard Streamlit (Etapa 8).
+Aegis AI Lab — dashboard Streamlit.
 
-Execute:
   streamlit run app.py
-
-Verificação rápida de ambiente (terminal):
-  python scripts/check_env.py
+  python scripts/demo_etapa11.py --full   # demo portfólio
+  docs/DEMO.md                            # roteiro ~5 min
 """
 
 from aegis.dashboard import render

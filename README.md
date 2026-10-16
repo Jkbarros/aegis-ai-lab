@@ -1,168 +1,131 @@
 # Aegis AI Lab
 
-Laboratório local para testes de segurança em aplicações que usam modelos de linguagem (LLMs).
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
+[![Tests](https://img.shields.io/badge/tests-pytest-green.svg)](tests/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-lightgrey.svg)](LICENSE)
 
-**Status:** Etapa 10 — revisão de segurança do próprio lab (`docs/SECURITY.md`).
+Laboratório local para **avaliação de segurança** de aplicações que usam LLMs: *prompt injection*, exposição de dados, validação de defesas e relatórios com métricas — com apps **simuladas** e LLM opcional (Ollama/OpenAI).
 
-Use apenas em aplicações próprias, modelos locais e ambientes autorizados.
+> **Uso ético:** apenas em sistemas próprios ou com autorização explícita. Veja [`docs/SECURITY.md`](docs/SECURITY.md).
 
-## Repositório GitHub
+**Repositório:** [github.com/Jkbarros/aegis-ai-lab](https://github.com/Jkbarros/aegis-ai-lab)
 
-Após o primeiro commit **feito por você**, o remoto sugerido é:
+---
 
-`https://github.com/Jkbarros/aegis-ai-lab`
+## Destaques
 
-## Configuração OpenAI (opcional nesta etapa)
+- Casos de teste versionados em JSON (`test_cases/`) com níveis de risco e expectativas.
+- Perfis `vulnerable`, `protected` e `hardened` para comparar maturidade da aplicação.
+- Avaliador com critérios explícitos (PASS/FAIL/INCONCLUSIVE) e evidências rastreáveis.
+- Dashboard Streamlit estilo *security command center* (local, `127.0.0.1`).
+- Relatórios schema **1.1** (métricas, recomendações, JSON + Markdown sanitizados).
+- **52+** testes `pytest` e checklist de segurança do próprio lab.
 
-1. Copie o exemplo de variáveis:
+## Screenshots
 
-   ```powershell
-   copy .env.example .env
-   ```
+| Dashboard | Executar testes |
+|-----------|-----------------|
+| *Adicione `docs/screenshots/dashboard-overview.png`* | *`docs/screenshots/executar-testes.png`* |
 
-2. Edite `.env` e defina `OPENAI_API_KEY` (nunca commite este arquivo).
+Instruções: [`docs/screenshots/README.md`](docs/screenshots/README.md)
 
-3. Instale dependências e verifique:
-
-   ```powershell
-   .\.venv\Scripts\Activate.ps1
-   pip install -r requirements.txt
-   python scripts\verify_openai.py
-   python scripts\verify_openai.py --ping
-   ```
-
-O módulo `aegis/llm/` abstrai o provedor (OpenAI e Ollama).
-
-## Ollama + Llama 3.2 (Etapa 6)
-
-No `.env`:
-
-```env
-LLM_PROVIDER=ollama
-OLLAMA_MODEL=llama3.2
-```
-
-Verificação (usa a API HTTP — **não** precisa do comando `ollama` no PATH):
+## Início rápido
 
 ```powershell
-python scripts\verify_ollama.py --ping
-python scripts\demo_etapa6_ollama.py --case pi-001
-```
-
-### Comando `ollama` não reconhecido no terminal do Cursor
-
-O instalador adiciona o Ollama ao PATH do **usuário**, mas terminais já abertos (ou o Cursor) podem não recarregar isso.
-
-**Opção A — recarregar PATH na sessão:**
-
-```powershell
-.\scripts\refresh-path.ps1
-ollama list
-```
-
-**Opção B — atalho do projeto (sempre funciona):**
-
-```powershell
-.\scripts\ollama.ps1 list
-.\scripts\ollama.ps1 run llama3.2 "Ola"
-```
-
-**Opção C — caminho completo:**
-
-```powershell
-& "$env:LOCALAPPDATA\Programs\Ollama\ollama.exe" list
-```
-
-## Política de commits
-
-Todos os commits são feitos **manualmente pelo mantenedor do projeto**. A IA do Cursor pode editar arquivos, mas não deve criar commits em seu nome (regra em `.cursor/rules/git-commits-usuario.mdc`).
-
-Confira seu autor Git antes do primeiro commit:
-
-```powershell
-git config user.name
-git config user.email
-```
-
-Se estiver vazio, configure **você mesmo** (exemplo):
-
-```powershell
-git config --global user.name "Seu Nome"
-git config --global user.email "seu@email.com"
-```
-
-## Testes automatizados (Etapa 5)
-
-```powershell
-cd "C:\Users\user\Documents\Projetos Cursor\Aegis AI Lab"
+git clone https://github.com/Jkbarros/aegis-ai-lab.git
+cd aegis-ai-lab
+python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
+copy .env.example .env
+python scripts\check_env.py
 python -m pytest
-```
-
-Atalho no PowerShell:
-
-```powershell
-.\scripts\run_tests.ps1
-```
-
-Só testes de integração (campanha completa):
-
-```powershell
-python -m pytest -m integration
-```
-
-## Dashboard (Etapa 8)
-
-```powershell
-pip install -r requirements.txt
 streamlit run app.py
 ```
 
-Ou:
+Demo de portfólio (~5 min):
 
 ```powershell
-.\scripts\run_dashboard.ps1
+.\scripts\run_demo.ps1
+# ou
+python scripts\demo_etapa11.py --full
 ```
 
-Na barra lateral: escolha o perfil (`vulnerable`, `protected`, `hardened`), filtros e **Executar campanha**. Relatórios vão para `reports/` (JSON + Markdown lado a lado).
+Roteiro narrado: [`docs/DEMO.md`](docs/DEMO.md)
 
-Na aba **Relatórios e métricas**: definições das taxas, recomendações, comparação entre duas campanhas salvas e download JSON/Markdown.
+## Arquitetura
 
-## Métricas e relatórios (Etapa 9)
+```mermaid
+flowchart LR
+    JSON[test_cases] --> Runner[TestRunner]
+    Runner --> App[Perfis simulados]
+    Runner --> Eval[Evaluator]
+    Eval --> Report[Reporter + Metrics]
+    Report --> Disk[(reports/)]
+    UI[Streamlit] --> Runner
+```
 
-- Schema de relatório `1.1` com blocos `metrics`, `recommendations` e `limitations`.
-- Taxas (PASS/FAIL/ERROR/INCONCLUSIVE) usam o **total de casos** como denominador; INCONCLUSIVE não conta como aprovação.
-- `expectation_match_rate` quando o JSON de casos define `expected_verdict`.
+Detalhes: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)
 
-Demo no terminal (gera campanhas se `reports/` estiver vazio):
+## Estrutura do projeto
+
+```
+aegis/
+  case_loader.py      # Casos JSON
+  test_runner.py      # Campanhas
+  evaluator.py        # Critérios e vereditos
+  reporter.py         # Persistência
+  metrics.py          # Taxas e comparação
+  security/           # Controles + sanitização de relatórios
+  target/             # Apps simuladas + LLM assistants
+  llm/                # Ollama / OpenAI
+  dashboard*.py       # UI Streamlit
+test_cases/           # Cenários de segurança
+tests/                # pytest
+docs/                 # SECURITY, ARCHITECTURE, DEMO
+scripts/              # Verificação, demos por etapa
+```
+
+## Configuração
+
+| Variável | Descrição |
+|----------|-----------|
+| `LLM_PROVIDER` | `ollama` ou `openai` |
+| `OLLAMA_MODEL` | ex. `llama3.2` |
+| `OPENAI_API_KEY` | opcional; só no `.env` |
+| `AEGIS_LAB_FAKE_SECRET` | segredo **fictício** para casos de vazamento |
 
 ```powershell
-python scripts\demo_etapa9.py
+python scripts\verify_ollama.py --ping
+python scripts\verify_openai.py --ping
 ```
 
-## Segurança do lab (Etapa 10)
+## Documentação por etapa (trilha pedagógica)
 
-Política de uso, segredos, relatórios sanitizados e Streamlit local:
+| Etapa | Tema |
+|-------|------|
+| 1–4 | Estrutura, apps simuladas, avaliador, casos JSON |
+| 5 | `pytest` |
+| 6 | Ollama / OpenAI |
+| 7 | Controles `hardened` |
+| 8–9 | Dashboard e métricas |
+| 10 | [`docs/SECURITY.md`](docs/SECURITY.md) |
+| 11 | Este README, [`docs/DEMO.md`](docs/DEMO.md), demo script |
 
-- Documento: [`docs/SECURITY.md`](docs/SECURITY.md)
-
-Checklist automatizado:
+## Segurança e qualidade
 
 ```powershell
 python scripts\check_security_lab.py
-python scripts\demo_etapa10.py
-python -m pytest tests/test_security_lab.py
-```
-
-Dependências (auditoria opcional):
-
-```powershell
 pip audit
+python -m pytest
 ```
 
-Verificação de ambiente (terminal):
+## Licença
 
-```powershell
-python scripts\check_env.py
-```
+MIT — veja [`LICENSE`](LICENSE).
+
+## Autor
+
+**Julio** — projeto de portfólio em segurança de aplicações com IA.
+
+Commits no repositório são feitos pelo mantenedor; ver [`.cursor/rules/git-commits-usuario.mdc`](.cursor/rules/git-commits-usuario.mdc).
