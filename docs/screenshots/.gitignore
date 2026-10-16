@@ -1,0 +1,5 @@
+# Mantém a pasta no Git; versiona PNG/JPG/WebP do portfólio
+*.tmp
+*.psd
+Thumbs.db
+.DS_Store
